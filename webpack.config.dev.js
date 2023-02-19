@@ -10,5 +10,5 @@ module.exports = merge(commonConfig, {
         hot: true,
         open: true,
     },
-    plugins: [new ESLintPlugin()]
+    plugins: [new ESLintPlugin({ fix: true })]
 });

@@ -7,21 +7,22 @@ const list = document.querySelector('.weather-list') as HTMLUListElement
 const soundElement = new Audio() as HTMLAudioElement
 soundElement.loop = true
 
-const volume = document.querySelector('.volume-controller') as HTMLElement
-volume.addEventListener('input', (e) => {
-  soundElement.volume = e.currentTarget?.value / 100
+const volume = document.querySelector('.volume-controller') as HTMLInputElement
+volume.addEventListener('input', (e: Event) => {
+  soundElement.volume = (e.currentTarget as HTMLInputElement).value / 100
 })
 
 list.addEventListener('click', ({ target }) => {
-  const targetId = target?.closest('[data-item-id]').dataset.itemId
+  const targetId = (target as HTMLElement).closest('[data-item-id]')?.dataset.itemId
   if (!targetId) return
+
   const item = data.find((i) => i.id === targetId)!
 
   if (playingSoundId !== item.id) {
-    playingSoundId = item.id
-    soundElement.src = item.sound
+    playingSoundId = item?.id
+    soundElement.src = item?.sound  || ''
     soundElement.play()
-    document.body.style.backgroundImage = `url('${item.background}')`
+    document.body.style.backgroundImage = `url('${item?.background}')`
     return
   }
 
